@@ -37,26 +37,25 @@ class PreProcessing():
     def read_text(self):
         txt_data = []
         # Read Text file
-        df = pd.read_csv(self.txt_path)
+        df = pd.read_csv(self.txt_path,  sep=" ", 
+                  names=["F1", "F2", "F3", "F4", "Price"])
         # Consider the four first Column as inputs
+        txt_data = df.loc[:,["F1", "F2", "F3", "F4"]]
+        # Consider the  last Column as Label
+        labels = df.loc[:,["Price"]]
+
+        return txt_data, labels
         
 
+    def label_binarizer(labels):
+        labels = np.array(labels)
+        LB = LabelBinarizer()
+        labels = LB.fit_transform(labels)
 
+        return labels
 
+    def train_test_split(txt_data, im_data, labels):
+        split = train_test_split(txt_data, im_data, labels, test_size = 0.2 )
+        txt_train, txt_test, img_train, img_test, labels_train, labels_test =  split
 
-
-
-
-
-    def label_binarizer(house_number):
-        color_label = np.array(house_number)
-        Color_LB = LabelBinarizer()
-        color_label = category_LB.fit_transform(house_number)
-        
-        return category_label, color_label
-
-    def train_test_split(data, category_label, color_label):
-        split = train_test_split(data, category_label, color_label, test_size = 0.2 )
-        X_train, X_test, Y_train_category, Y_test_category, Y_train_color, Y_test_color = split
-
-        return X_train, X_test, Y_train_category, Y_test_category, Y_train_color, Y_test_color
+        return txt_train, txt_test, img_train, img_test, labels_train, labels_test
