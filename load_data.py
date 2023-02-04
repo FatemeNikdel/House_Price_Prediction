@@ -12,7 +12,7 @@ class PreProcessing():
         self.im_path = im_path
         self.txt_path = txt_path
 
-    def load_data(self):
+    def data(self):
         im_data   = []
         rooms = []
         house_number = []
@@ -22,7 +22,7 @@ class PreProcessing():
             # Resize and Normalize
             img = cv2.resize(img, (32, 32))/255.0
             # RGB Color
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # Create Dataset
             im_data.append(img)
             # Create Labels
@@ -48,7 +48,7 @@ class PreProcessing():
         
 
     def label_binarizer(labels):
-        labels = np.array(labels)
+        #labels = np.array(labels)
         LB = LabelBinarizer()
         labels = LB.fit_transform(labels)
 
@@ -56,6 +56,6 @@ class PreProcessing():
 
     def train_test_split(txt_data, im_data, labels):
         split = train_test_split(txt_data, im_data, labels, test_size = 0.2 )
-        txt_train, txt_test, img_train, img_test, labels_train, labels_test =  split
-
+        txt_train, txt_test,labels_train, labels_test =  split
+        img_train, img_test =  split
         return txt_train, txt_test, img_train, img_test, labels_train, labels_test
