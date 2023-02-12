@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras.layers import Layer
 from keras.losses import Loss
+import numpy as np
 
 ## Define Custom Loss Function
 class HuberLoss(Loss):
@@ -126,3 +127,38 @@ class MaxPooling(tf.keras.layers.Layer):
                                 ksize=self.pool_size, 
                                 strides=self.strides, 
                                 padding=self.padding)
+    
+
+class ActivationFunctions:
+    """
+        Implementations of some commonly used activation functions.
+        Parameters
+        ___________
+        - x: Input Value
+
+        Output
+        _______
+        - return: The activation value
+        """
+    def __init__(self):
+        pass
+    # Compute the  rectified linear unit activation function
+    def relu(self, x):
+        return np.maximum(0, x)
+    # Compute the relu activation function
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+    # Compute the relu activation function
+    def linear(self, x):
+        return x
+    # Compute the hyperbolic tangent activation function
+    def tanh(self, x):
+        return np.tanh(x)
+    # Compute the softmax activation function
+    def softmax(x):
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
+    # Compute the leaky rectified linear unit activation function
+    def leaky_relu(self, x, alpha=0.01):
+        return np.where(x > 0, x, x * alpha)
+
+
