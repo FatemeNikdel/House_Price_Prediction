@@ -128,7 +128,7 @@ class MaxPooling(tf.keras.layers.Layer):
                                 strides=self.strides, 
                                 padding=self.padding)
     
-
+## Define Custom ActivationFunctions Layer
 class ActivationFunctions:
     """
         Implementations of some commonly used activation functions.
@@ -162,3 +162,28 @@ class ActivationFunctions:
         return np.where(x > 0, x, x * alpha)
 
 
+
+class Flatten(tf.keras.layers.Layer):
+    """Custom layer for flattening input tensors."""
+
+    def __init__(self):
+        """Initialize the layer."""
+        super(Flatten, self).__init__()
+
+    def call(self, inputs):
+        """Implement the layer's logic.
+
+        Args:
+        inputs: Tensor, input to the layer.
+
+        Returns:
+        Flattened tensor.
+        """
+        # Get the shape of the input tensor
+        shape = inputs.shape
+
+        # Calculate the number of elements in the tensor
+        num_elements = shape[1:].num_elements()
+
+        # Reshape the tensor to a 1D array
+        return tf.reshape(inputs, [-1, num_elements])

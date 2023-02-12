@@ -18,39 +18,37 @@ class FashionNet():
         self.labels_train   = labels_train
         self.labels_test    = labels_test
         self.epochs = epochs
+        
     def bedroom_model(self):
         bedroom_input = layers.Input(shape = (32, 32, 3))
-        x = custom_layers.Conv2D(64, (3,3), activation = "relu")(bedroom_input)
-        x = custom_layers.Conv2D(64, (3,3), activation = "relu")(x)
+        x = custom_layers.Conv2D(64, (3,3))(bedroom_input)
+        x = custom_layers.ActivationFunctions.relu()(x)
         x = custom_layers.MaxPooling()(x)
-        x = custom_layers.Conv2D(128, (3,3), activation = "relu")(x)
-        x = custom_layers.Conv2D(128, (3,3), activation = "relu")(x)
+        x = custom_layers.Conv2D(128, (3,3))(x)
+        x = custom_layers.ActivationFunctions.relu()(x)
         x = custom_layers.MaxPooling()(x)
-        x = custom_layers.Conv2D(256, (3,3), activation = "relu")(x)
-        x = custom_layers.Conv2D(256, (3,3), activation = "relu")(x)
-        x = custom_layers.Conv2D(256, (3,3), activation = "relu")(x)
+        x = custom_layers.Conv2D(256, (3,3))(x)
+        x = custom_layers.ActivationFunctions.relu()(x)
         x = custom_layers.MaxPooling()(x)
-        x = custom_layers.Conv2D(512, (3,3), activation = "relu")(x)
-        x = custom_layers.Conv2D(512, (3,3), activation = "relu")(x)
-        x = custom_layers.Conv2D(512, (3,3), activation = "relu")(x)
+        x = custom_layers.Conv2D(512, (3,3))(x)
+        x = custom_layers.ActivationFunctions.relu()(x)
         x = custom_layers.MaxPooling()(x)
-        x = custom_layers.Conv2D(512, (3,3), strides = (2,2), activation = "relu")(x)
-        x = custom_layers.Conv2D(512, (3,3), strides = (2,2),activation = "relu")(x)
-        x = custom_layers.Conv2D(512, (3,3), strides = (2,2),activation = "relu")(x)
+        x = custom_layers.Conv2D(512, (3,3))(x)
+        x = custom_layers.ActivationFunctions.relu()(x)
         x = custom_layers.MaxPooling()(x)
         return x
 
     def  bathroom_model(self):
-           
+
 
 
         # It concatenate the layer in depth axis
         concat_input = layers.concatenate([x, y, z, w], axis = 2)
         flat_input   = layers.flatten()(concat_input)
         out = custom_layers.Dense(50)(flat_input)
-        out = custom_layers.relu()(out)
+        out = custom_layers.ActivationFunctions.relu(out)
         out = custom_layers.Dense(1)(out)
-        out = custom_layers.MAE()(out)
+        out = custom_layers.ActivationFunctions.linear()(out)
 
         
 
