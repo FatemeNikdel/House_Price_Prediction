@@ -18,7 +18,7 @@ class FashionNet():
         self.labels_train   = labels_train
         self.labels_test    = labels_test
         self.epochs = epochs
-        
+
     def bedroom_model(self):
         bedroom_input = layers.Input(shape = (32, 32, 3))
         x = custom_layers.Conv2D(64, (3,3))(bedroom_input)
@@ -44,7 +44,7 @@ class FashionNet():
 
         # It concatenate the layer in depth axis
         concat_input = layers.concatenate([x, y, z, w], axis = 2)
-        flat_input   = layers.flatten()(concat_input)
+        flat_input   = custom_layers.Flatten()(concat_input)
         out = custom_layers.Dense(50)(flat_input)
         out = custom_layers.ActivationFunctions.relu(out)
         out = custom_layers.Dense(1)(out)
